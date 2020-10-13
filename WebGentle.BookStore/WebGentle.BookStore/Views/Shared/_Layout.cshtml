@@ -44,14 +44,8 @@
             </div>
         </nav>
     </header>
-    @RenderSection("breadcrumb", required:false)
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Page 1</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Page 2</li>
-        </ol>
-    </nav>
+    @RenderSection("breadcrumb", required: false)
+
     <main role="main">
         @RenderBody()
     </main>
@@ -61,7 +55,8 @@
         </div>
     </footer>
     <script src="~/lib/jquery/jquery.js"></script>
-
-    @RenderSection("scripts", required:false)
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
