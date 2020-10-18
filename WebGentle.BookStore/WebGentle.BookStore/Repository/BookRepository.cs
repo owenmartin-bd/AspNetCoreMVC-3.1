@@ -24,7 +24,8 @@ namespace WebGentle.BookStore.Repository
                 Author = model.Author,
                 Description = model.Description,
                 Title = model.Title,
-                TotalPages = model.TotalPages,
+                LanguageId = model.LanguageId,
+                TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow
             };
@@ -36,83 +37,70 @@ namespace WebGentle.BookStore.Repository
         }
         public async Task<List<BookModel>> GetAllBooks()
         {
-            var books = new List<BookModel>();
-            var allbooks = await _context.Books.ToListAsync();
-            if(allbooks?.Any() == true)
-            {
-                foreach(var book in allbooks)
-                {
-                    books.Add(new BookModel() { 
-                        Author = book.Author,
-                        Category = book.Category,
-                        Description = book.Description,
-                        Id = book.Id,
-                        Language = book.Language,
-                        Title = book.Title,
-                        TotalPages = book.TotalPages
-                    });
-                }
-            }
-            return books;
-        }
-
-        public async Task<BookModel> GetBookById(int id)
-        {
-            var book = await _context.Books.FindAsync(id);
-            if(book != null)
-            {
-                var bookDetails = new BookModel()
+            return await _context.Books.
+                Select(book => new BookModel() 
                 {
                     Author = book.Author,
                     Category = book.Category,
                     Description = book.Description,
                     Id = book.Id,
-                    Language = book.Language,
+                    LanguageId = book.LanguageId,
+                    Language = book.Language.Name,
                     Title = book.Title,
                     TotalPages = book.TotalPages
-                };
+                }).ToListAsync();
+        }
 
-                return bookDetails;
-            }
-            return null;
+        public async Task<BookModel> GetBookById(int id)
+        {
+            return await _context.Books.Where(x => x.Id == id)
+                .Select(book => new BookModel()
+                {
+                    Author = book.Author,
+                    Category = book.Category,
+                    Description = book.Description,
+                    Id = book.Id,
+                    LanguageId = book.LanguageId,
+                    Language = book.Language.Name,
+                    Title = book.Title,
+                    TotalPages = book.TotalPages
+                }).FirstOrDefaultAsync();
         }
 
         public List<BookModel> SearchBook(string title, string authorName)
         {
-            return DataSource()
-                .Where(x => x.Title.Contains(title) || x.Author.Contains(authorName))
-                .ToList();
+            return null;
         }
 
-        private List<BookModel> DataSource()
-        {
-            return new List<BookModel>()
-            {
-                new BookModel() { Id = 1, Title = "MVC", Author = "Nitish", 
-                    Description = "This is the description for MVC book",
-                    Category = "Programming", Language = "English", TotalPages = 134
-                },
-                new BookModel() { Id = 2, Title = "Dot Net Core", Author = "Nitish", 
-                    Description = "This is the description for Dot Net Core book",
-                    Category = "Framework", Language = "Chinese", TotalPages = 567
-                },
-                new BookModel() { Id = 3, Title = "C#", Author = "Monika",
-                    Description = "This is the description for C# book",
-                    Category = "Developer", Language = "Hindi", TotalPages = 897
-                },
-                new BookModel() { Id = 4, Title = "Java", Author = "Webgentle", 
-                    Description = "This is the description for Java book",
-                    Category = "Concept", Language = "English", TotalPages = 564
-                },
-                new BookModel() { Id = 5, Title = "Php", Author = "Webgentle",
-                    Description = "This is the description for Php book",
-                    Category = "Programming", Language = "English", TotalPages = 100
-                },
-                new BookModel() { Id = 6, Title = "Azure DevOps", Author = "NItish",
-                    Description = "This is the description for Azure DevOps book",
-                    Category = "DevOps", Language = "English", TotalPages = 800
-                }
-            };
-        }
+        //private List<BookModel> DataSource()
+        //{
+        //    return new List<BookModel>()
+        //    {
+        //        new BookModel() { Id = 1, Title = "MVC", Author = "Nitish", 
+        //            Description = "This is the description for MVC book",
+        //            Category = "Programming", Language = "English", TotalPages = 134
+        //        },
+        //        new BookModel() { Id = 2, Title = "Dot Net Core", Author = "Nitish", 
+        //            Description = "This is the description for Dot Net Core book",
+        //            Category = "Framework", Language = "Chinese", TotalPages = 567
+        //        },
+        //        new BookModel() { Id = 3, Title = "C#", Author = "Monika",
+        //            Description = "This is the description for C# book",
+        //            Category = "Developer", Language = "Hindi", TotalPages = 897
+        //        },
+        //        new BookModel() { Id = 4, Title = "Java", Author = "Webgentle", 
+        //            Description = "This is the description for Java book",
+        //            Category = "Concept", Language = "English", TotalPages = 564
+        //        },
+        //        new BookModel() { Id = 5, Title = "Php", Author = "Webgentle",
+        //            Description = "This is the description for Php book",
+        //            Category = "Programming", Language = "English", TotalPages = 100
+        //        },
+        //        new BookModel() { Id = 6, Title = "Azure DevOps", Author = "NItish",
+        //            Description = "This is the description for Azure DevOps book",
+        //            Category = "DevOps", Language = "English", TotalPages = 800
+        //        }
+        //    };
+        //}
     }
 }

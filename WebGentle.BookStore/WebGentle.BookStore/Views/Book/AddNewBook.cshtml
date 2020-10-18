@@ -1,4 +1,5 @@
-﻿@model BookModel
+﻿@using WebGentle.BookStore.Enums
+@model BookModel
 @{ 
     ViewData["Title"] = "Add new book";
 }
@@ -8,7 +9,7 @@
         Add new book
     </h3>
     <hr />
-    @if (ViewBag.IsSuccess) 
+    @if (ViewBag.IsSuccess == true) 
     { 
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Congratulations</strong> You added new book successfully. <br />
@@ -19,25 +20,46 @@
         </div>
     }
     
-    <form method="post" asp-action="AddNewBook" asp-controller="Book">
-        <div class="from-group">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
-        </div>
-        <div class="from-group">
-            <label asp-for="Author"></label>
-            <input asp-for="Author" class="form-control" />
-        </div>
-        <div class="from-group">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control"></textarea>
-        </div>
-        <div class="from-group">
-            <label asp-for="TotalPages"></label>
-            <input asp-for="TotalPages" class="form-control" />
-        </div>
-        <div class="from-group">
-            <input type="submit" value="Add book" class="btn btn-primary">
-        </div>
-    </form>
+<form method="post" asp-action="AddNewBook" asp-controller="Book">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<div class="from-group">
+            <label asp-for="MyFIeld"></label>
+            <input asp-for="MyFIeld" class="form-control" />
+            <span asp-validation-for="MyFIeld" class="text-danger"></span>
+        </div>*@
+
+    <div class="from-group">
+        <label asp-for="LanguageId"></label>
+        <select asp-for="LanguageId" class="form-control" 
+                asp-items="ViewBag.Language" >
+            <option value="">Please choose your language</option>
+        </select>
+        <span asp-validation-for="LanguageId" class="text-danger"></span>
+    </div>
+
+    <div class="from-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="from-group">
+        <label asp-for="Author"></label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="TotalPages"></label>
+        <input asp-for="TotalPages" class="form-control" />
+        <span asp-validation-for="TotalPages" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <input type="submit" value="Add book" class="btn btn-primary">
+    </div>
+</form>
 </div>
