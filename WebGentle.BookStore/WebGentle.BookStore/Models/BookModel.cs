@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebGentle.BookStore.Enums;
+using WebGentle.BookStore.Helpers;
 
 namespace WebGentle.BookStore.Models
 {
@@ -17,6 +19,8 @@ namespace WebGentle.BookStore.Models
         public int Id { get; set; }
         [StringLength(100, MinimumLength = 5)]
         [Required(ErrorMessage = "Please enter the title of your book")]
+        //[MyCustomValidation(ErrorMessage = "This is custom error message for custom validation")]
+        //[MyCustomValidation("azure")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Please enter the author name")]
         public string Author { get; set; }
@@ -29,5 +33,9 @@ namespace WebGentle.BookStore.Models
         [Required(ErrorMessage = "Please enter the total pages")]
         [Display(Name = "Total pages of book")]
         public int? TotalPages { get; set; }
+        [Display(Name = "Choose the cover photo of your book")]
+        [Required]
+        public IFormFile CoverPhoto { get; set; }
+        public string CoverImageUrl { get; set; }
     }
 }

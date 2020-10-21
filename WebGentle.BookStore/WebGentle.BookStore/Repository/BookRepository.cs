@@ -27,7 +27,8 @@ namespace WebGentle.BookStore.Repository
                 LanguageId = model.LanguageId,
                 TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn = DateTime.UtcNow
+                UpdatedOn = DateTime.UtcNow,
+                CoverImageUrl = model.CoverImageUrl
             };
 
             await _context.Books.AddAsync(newBook);
@@ -35,6 +36,7 @@ namespace WebGentle.BookStore.Repository
 
             return newBook.Id;
         }
+
         public async Task<List<BookModel>> GetAllBooks()
         {
             return await _context.Books.
@@ -47,7 +49,8 @@ namespace WebGentle.BookStore.Repository
                     LanguageId = book.LanguageId,
                     Language = book.Language.Name,
                     Title = book.Title,
-                    TotalPages = book.TotalPages
+                    TotalPages = book.TotalPages,
+                    CoverImageUrl = book.CoverImageUrl
                 }).ToListAsync();
         }
 
@@ -63,7 +66,8 @@ namespace WebGentle.BookStore.Repository
                     LanguageId = book.LanguageId,
                     Language = book.Language.Name,
                     Title = book.Title,
-                    TotalPages = book.TotalPages
+                    TotalPages = book.TotalPages,
+                    CoverImageUrl = book.CoverImageUrl
                 }).FirstOrDefaultAsync();
         }
 

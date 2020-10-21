@@ -24,9 +24,14 @@ namespace WebGentle.BookStore
             services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer("Server=DESKTOP-O8GHRRP\\SQLEXPRESS;Database=BookStore;User ID=sa;Password=0w3n1984"));
             services.AddControllersWithViews();
-            #if DEBUG
+#if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
-#endif
+                // Enable to turn off client side validation
+                //.AddViewOptions(option => 
+                //{
+                //    option.HtmlHelperOptions.ClientValidationEnabled = false;
+                //});
+            #endif
             services.AddScoped<BookRepository, BookRepository>();
             services.AddScoped<LanguageRepository, LanguageRepository>();
         }
