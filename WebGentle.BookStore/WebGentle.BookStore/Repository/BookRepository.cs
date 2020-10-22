@@ -25,10 +25,11 @@ namespace WebGentle.BookStore.Repository
                 Description = model.Description,
                 Title = model.Title,
                 LanguageId = model.LanguageId,
-                TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
+                TotalPages = model.TotalPages ?? 0,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
-                CoverImageUrl = model.CoverImageUrl
+                CoverImageUrl = model.CoverImageUrl,
+                BookPdfUrl = model.BookPdfUrl
             };
             newBook.bookGallery = new List<BookGallery>();
             foreach (var file in model.Gallery)
@@ -82,7 +83,8 @@ namespace WebGentle.BookStore.Repository
                         Id = book.Id,
                         Name = book.Name,
                         URL = book.URL
-                    }).ToList()
+                    }).ToList(),
+                    BookPdfUrl = book.BookPdfUrl
                 }).FirstOrDefaultAsync();
         }
 
