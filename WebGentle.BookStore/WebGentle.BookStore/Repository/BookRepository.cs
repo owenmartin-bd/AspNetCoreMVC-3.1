@@ -30,6 +30,15 @@ namespace WebGentle.BookStore.Repository
                 UpdatedOn = DateTime.UtcNow,
                 CoverImageUrl = model.CoverImageUrl
             };
+            newBook.bookGallery = new List<BookGallery>();
+            foreach (var file in model.Gallery)
+            {
+                newBook.bookGallery.Add(new BookGallery() 
+                {
+                    Name = file.Name,
+                    URL = file.URL
+                });
+            }
 
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
@@ -67,7 +76,13 @@ namespace WebGentle.BookStore.Repository
                     Language = book.Language.Name,
                     Title = book.Title,
                     TotalPages = book.TotalPages,
-                    CoverImageUrl = book.CoverImageUrl
+                    CoverImageUrl = book.CoverImageUrl,
+                    Gallery = book.bookGallery.Select(book => new GalleryModel
+                    {
+                        Id = book.Id,
+                        Name = book.Name,
+                        URL = book.URL
+                    }).ToList()
                 }).FirstOrDefaultAsync();
         }
 

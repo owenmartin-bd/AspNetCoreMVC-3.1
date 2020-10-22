@@ -30,58 +30,66 @@
     data-ajax-complete="myComplete" data-ajax-success="mySuccess"
     data-ajax-failure="myFailure" data-ajax-loading="#myLoader"*@
 
-    <form method="post" enctype="multipart/form-data"
-          asp-action="AddNewBook" asp-controller="Book">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        @*<div class="from-group">
-                <label asp-for="MyFIeld"></label>
-                <input asp-for="MyFIeld" class="form-control" />
-                <span asp-validation-for="MyFIeld" class="text-danger"></span>
-            </div>*@
+<form method="post" enctype="multipart/form-data"
+      asp-action="AddNewBook" asp-controller="Book">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<div class="from-group">
+            <label asp-for="MyFIeld"></label>
+            <input asp-for="MyFIeld" class="form-control" />
+            <span asp-validation-for="MyFIeld" class="text-danger"></span>
+        </div>*@
 
-        <div class="from-group">
-            <label asp-for="LanguageId"></label>
-            <select asp-for="LanguageId" class="form-control"
-                    asp-items="ViewBag.Language">
-                <option value="">Please choose your language</option>
-            </select>
-            <span asp-validation-for="LanguageId" class="text-danger"></span>
-        </div>
+    <div class="from-group">
+        <label asp-for="LanguageId"></label>
+        <select asp-for="LanguageId" class="form-control"
+                asp-items="ViewBag.Language">
+            <option value="">Please choose your language</option>
+        </select>
+        <span asp-validation-for="LanguageId" class="text-danger"></span>
+    </div>
 
-        <div class="from-group">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
+    <div class="from-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
 
-        <div class="from-group">
-            <label asp-for="Author"></label>
-            <input asp-for="Author" class="form-control" />
-            <span asp-validation-for="Author" class="text-danger"></span>
+    <div class="from-group">
+        <label asp-for="Author"></label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="TotalPages"></label>
+        <input asp-for="TotalPages" class="form-control" />
+        <span asp-validation-for="TotalPages" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="CoverPhoto"></label>
+        <div class="custom-file">
+            <input asp-for="CoverPhoto" type="file" class="custom-file-input" id="customFile">
+            <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
-        <div class="from-group">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="from-group">
+        <label asp-for="GalleryFiles"></label>
+        <div class="custom-file">
+            <input asp-for="GalleryFiles" class="custom-file-input" id="customFiles">
+            <label class="custom-file-label" for="customFiles">Choose files</label>
         </div>
-        <div class="from-group">
-            <label asp-for="TotalPages"></label>
-            <input asp-for="TotalPages" class="form-control" />
-            <span asp-validation-for="TotalPages" class="text-danger"></span>
-        </div>
-        <div class="from-group">
-            <label asp-for="CoverPhoto"></label>
-            <div class="custom-file">
-                <input asp-for="CoverPhoto" type="file" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Choose file</label>
-            </div>
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
 
-        <div class="from-group">
-            <input type="submit" value="Add book" class="btn btn-primary">
-        </div>
-    </form>
+    <div class="from-group">
+        <input type="submit" value="Add book" class="btn btn-primary">
+    </div>
+</form>
 </div>
 
 @section scripts {
