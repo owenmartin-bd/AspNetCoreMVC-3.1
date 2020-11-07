@@ -39,25 +39,13 @@
 
 <div class="py-5 bg-light">
     <div class="container">
-        @*<h3 class="h3">Top books</h3>*@
-        <big>Top books</big>
-        <p big>Top book using attribute</p>
-        <div class="row">
-            <div class="col-md-4">
-                @*<partial name="_bookThumbnail" model="new BookModel()"/>*@
-                @Html.Partial("_bookThumbnail", new BookModel())
-            </div>
-            <div class="col-md-4">
-                @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-                @await Html.PartialAsync("_bookThumbnail", new BookModel())
-            </div>
-            <div class="col-md-4">
-                @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-                @{
-                    Html.RenderPartial("_bookThumbnail", new BookModel());
-                }
-            </div>
-        </div>
+        <h3 class="h3">Top books</h3>
+        @*<big>Top books</big>
+        <p big>Top book using attribute</p>*@
+        @await Component.InvokeAsync("TopBooks", new { count = 3 })
+
+        @*<vc:top-books count="3"></vc:top-books>*@
+        
     </div>
 </div>
 
