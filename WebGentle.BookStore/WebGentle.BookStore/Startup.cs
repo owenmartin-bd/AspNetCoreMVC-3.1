@@ -32,8 +32,8 @@ namespace WebGentle.BookStore
                 //    option.HtmlHelperOptions.ClientValidationEnabled = false;
                 //});
             #endif
-            services.AddScoped<BookRepository, BookRepository>();
-            services.AddScoped<LanguageRepository, LanguageRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,10 +60,11 @@ namespace WebGentle.BookStore
                 //{
                 //    await context.Response.WriteAsync(env.EnvironmentName);
                 //});
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+                //endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllerRoute(
                 //    name: "Default",
-                //    pattern: "bookApp/{controller=Home}/{action=Index}/{id?}");
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

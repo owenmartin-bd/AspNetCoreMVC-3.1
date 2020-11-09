@@ -8,7 +8,7 @@ using WebGentle.BookStore.Models;
 
 namespace WebGentle.BookStore.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context;
 
@@ -34,7 +34,7 @@ namespace WebGentle.BookStore.Repository
             newBook.bookGallery = new List<BookGallery>();
             foreach (var file in model.Gallery)
             {
-                newBook.bookGallery.Add(new BookGallery() 
+                newBook.bookGallery.Add(new BookGallery()
                 {
                     Name = file.Name,
                     URL = file.URL
@@ -50,7 +50,7 @@ namespace WebGentle.BookStore.Repository
         public async Task<List<BookModel>> GetAllBooks()
         {
             return await _context.Books.
-                Select(book => new BookModel() 
+                Select(book => new BookModel()
                 {
                     Author = book.Author,
                     Category = book.Category,

@@ -12,14 +12,15 @@ using WebGentle.BookStore.Repository;
 
 namespace WebGentle.BookStore.Controllers
 {
+    [Route("[controller]/[action]")]
     public class BookController : Controller
     {
-        private readonly BookRepository _bookRepository = null;
-        private readonly LanguageRepository _languageRepository = null;
+        private readonly IBookRepository _bookRepository = null;
+        private readonly ILanguageRepository _languageRepository = null;
         private readonly IWebHostEnvironment _webHostEnvironment = null;
 
-        public BookController(BookRepository bookRepository, 
-            LanguageRepository languageRepository,
+        public BookController(IBookRepository bookRepository, 
+            ILanguageRepository languageRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
@@ -27,12 +28,14 @@ namespace WebGentle.BookStore.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Route("~/all-books")]
         public async Task<ViewResult> GetAllBooks()
         {
             var data = await _bookRepository.GetAllBooks();
             return View(data);
         }
 
+        [Route("~/book-details/{id:int:min(1)}", Name = "bookDetailsRoute")]
         public async Task<ViewResult> GetBook(int id)
         {
             var data = await _bookRepository.GetBookById(id);

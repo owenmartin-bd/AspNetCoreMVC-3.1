@@ -8,6 +8,7 @@ using WebGentle.BookStore.Models;
 
 namespace WebGentle.BookStore.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         [ViewData]
@@ -17,6 +18,7 @@ namespace WebGentle.BookStore.Controllers
         [ViewData]
         public BookModel Book { get; set; }
 
+        [Route("~/")]
         public ViewResult Index()
         {
             Title = "Home page from controller";
@@ -25,6 +27,7 @@ namespace WebGentle.BookStore.Controllers
             return View();
         }
 
+        [Route("about-us")]
         public ViewResult AboutUs()
         {
             Title = "About page from controller";
