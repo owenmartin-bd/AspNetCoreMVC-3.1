@@ -72,8 +72,8 @@ namespace WebGentle.BookStore.Controllers
             //    new SelectListItem() { Text = "Chinese", Value = "6" },
             //};
 
-            ViewBag.Language = 
-                new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            //ViewBag.Language = 
+            //    new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
 
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookId;
@@ -135,8 +135,8 @@ namespace WebGentle.BookStore.Controllers
             //ViewBag.IsSuccess = false;
             //ViewBag.BookId = 0;
             //ModelState.AddModelError("", "This is my custom error message");
-            ViewBag.Language =
-                new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            //ViewBag.Language =
+            //    new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             return View(); 
         }
 

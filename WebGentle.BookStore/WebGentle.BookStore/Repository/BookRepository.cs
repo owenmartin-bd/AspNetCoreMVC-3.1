@@ -110,6 +110,11 @@ namespace WebGentle.BookStore.Repository
             return null;
         }
 
+        public string GetAppName()
+        {
+            return "Book store application";
+        }
+
         //private List<BookModel> DataSource()
         //{
         //    return new List<BookModel>()
