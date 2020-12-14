@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGentle.BookStore.Models;
 
 namespace WebGentle.BookStore.Data
 {
-    public class BookStoreContext : DbContext
+    public class BookStoreContext : IdentityDbContext<ApplicationUser>
     {
         public BookStoreContext(DbContextOptions<BookStoreContext> options)
             : base(options)

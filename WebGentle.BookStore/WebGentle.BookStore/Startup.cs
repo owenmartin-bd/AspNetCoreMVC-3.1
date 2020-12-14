@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using WebGentle.BookStore.Data;
+using WebGentle.BookStore.Models;
 using WebGentle.BookStore.Repository;
 
 namespace WebGentle.BookStore
@@ -30,7 +32,26 @@ namespace WebGentle.BookStore
         {
             services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<BookStoreContext>();
+
+            services.Configure<IdentityOptions>(options => 
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
             services.AddControllersWithViews();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = _configuration["Application:LoginPath"];
+            });
             #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
                 // Enable to turn off client side validation
@@ -41,6 +62,11 @@ namespace WebGentle.BookStore
             #endif
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddSingleton<IMessageRepository, MessageRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.Configure<NewBookAlertConfig>("InternalBook", _configuration.GetSection("NewBookAlert"));
+            services.Configure<NewBookAlertConfig>("ThirdPartyBook", _configuration.GetSection("ThirdPartyBook"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +86,9 @@ namespace WebGentle.BookStore
             //});
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

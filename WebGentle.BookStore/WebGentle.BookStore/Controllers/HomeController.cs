@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebGentle.BookStore.Models;
+using WebGentle.BookStore.Repository;
 
 namespace WebGentle.BookStore.Controllers
 {
@@ -18,22 +20,34 @@ namespace WebGentle.BookStore.Controllers
         public string Title { get; set;  }
         [ViewData]
         public BookModel Book { get; set; }
-        private readonly IConfiguration configuration;
+        private readonly NewBookAlertConfig _newBookAlertconfiguration;
+        private readonly NewBookAlertConfig _thirdPartyBookconfiguration;
+        private readonly IMessageRepository _messageRepository;
 
-
-        public HomeController(IConfiguration _configuration)
+        public HomeController(IOptionsSnapshot<NewBookAlertConfig> newBookAlertconfiguration,
+            IMessageRepository messageRepository)
         {
-            configuration = _configuration;
+            _newBookAlertconfiguration = newBookAlertconfiguration.Get("InternalBook");
+            _thirdPartyBookconfiguration = newBookAlertconfiguration.Get("ThirdPartyBook");
+            _messageRepository = messageRepository;
         }
 
         [Route("~/")]
         public ViewResult Index()
         {
-            Title = "Home page from controller";
-            CustomProperty = "Custom value";
+            bool isDisplay = _newBookAlertconfiguration.DisplayNewBookAlert;
+            bool isDisplay2 = _newBookAlertconfiguration.DisplayNewBookAlert;
 
-            var result = configuration.GetValue<bool>("NewBookAlert:DisplayNewBookAlert");
-            var bookName = configuration.GetValue<string>("NewBookAlert:BookName");
+            //var value = _messageRepository.GetName();
+
+
+            //Title = "Home page from controller";
+            //CustomProperty = "Custom value";
+
+            //var newBook = configuration.GetSection("NewBookAlert");
+
+            //var result = newBook.GetValue<bool>("DisplayNewBookAlert");
+            //var bookName = newBook.GetValue<string>("BookName");
             
             //var result = configuration["AppName"];
             //var key1 = configuration["infoObj:key1"];
