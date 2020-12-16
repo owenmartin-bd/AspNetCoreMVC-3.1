@@ -25,24 +25,37 @@ namespace WebGentle.BookStore.Controllers
         private readonly NewBookAlertConfig _thirdPartyBookconfiguration;
         private readonly IMessageRepository _messageRepository;
         private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
 
         public HomeController(IOptionsSnapshot<NewBookAlertConfig> newBookAlertconfiguration,
-            IMessageRepository messageRepository, IUserService userService)
+            IMessageRepository messageRepository, IUserService userService,
+            IEmailService emailService)
         {
             _newBookAlertconfiguration = newBookAlertconfiguration.Get("InternalBook");
             _thirdPartyBookconfiguration = newBookAlertconfiguration.Get("ThirdPartyBook");
             _messageRepository = messageRepository;
             _userService = userService;
+            _emailService = emailService;
         }
 
         [Route("~/")]
-        public ViewResult Index()
+        public async Task<ViewResult> Index()
         {
-            var userId = _userService.GetUserId();
-            var isLoggedIn = _userService.IsAuthenticated();
+            //UserEmailOptions options = new UserEmailOptions
+            //{
+            //    ToEmails = new List<string>() { "test@gmail.com" },
+            //    PlaceHolders = new List<KeyValuePair<string, string>>() 
+            //    {
+            //        new KeyValuePair<string, string>("{{UserName}}", "Owen")
+            //    }
+            //};
 
-            bool isDisplay = _newBookAlertconfiguration.DisplayNewBookAlert;
-            bool isDisplay2 = _newBookAlertconfiguration.DisplayNewBookAlert;
+            //await _emailService.SendTestEmail(options);
+            //var userId = _userService.GetUserId();
+            //var isLoggedIn = _userService.IsAuthenticated();
+
+            //bool isDisplay = _newBookAlertconfiguration.DisplayNewBookAlert;
+            //bool isDisplay2 = _newBookAlertconfiguration.DisplayNewBookAlert;
 
             //var value = _messageRepository.GetName();
 
